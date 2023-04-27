@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <h1>WebSocket Example</h1>
+    <input type="text" id="message" placeholder="Enter your message">
+    <button id="send">Send</button>
+    <ul id="messages"></ul>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8888/websocket");
+        ws.onmessage = (event) => {
+            const messages = document.getElementById("messages");
+            const message = document.createElement("li");
+            message.innerText = event.data;
+            messages.appendChild(message);
+        };
+
+        const sendButton = document.getElementById("send");
+        //ユーザがメッセージを入力して "Send" ボタンをクリックすると、<button> タグの id="send" に関連付けられた onclick イベントが発火する
+        sendButton.onclick = () => {
+            const messageInput = document.getElementById("message");
+            ws.send(messageInput.value);
+            messageInput.value = "";
+        };
+    </script>
+</body>
+</html>
