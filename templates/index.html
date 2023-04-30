@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テストページ</title>
+    <script>
+        async function submitForm() {
+            const inputText = document.getElementById("input-text").value;
+            const response = await fetch("/piepie", {
+                method: "POST",
+                body: new URLSearchParams({ input_text: inputText }),
+            });
+            const resultText = await response.text();
+
+            // 結果を新しい<div>要素に追加し、それを#results内に挿入
+            const resultDiv = document.createElement("div");
+            resultDiv.innerText = resultText;
+            document.getElementById("results").appendChild(resultDiv);
+
+            // 入力ボックスを空にする
+            document.getElementById("input-text").value = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>こんにちは、みなさん！</h1>
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <input type="text" id="input-text" placeholder="ぴぇ？">
+        <button type="submit">送信</button>
+    </form>
+    <div id="results"></div>
+</body>
+</html>
