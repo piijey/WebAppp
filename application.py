@@ -1,19 +1,10 @@
-import os
-import tornado.ioloop
-import tornado.web
+from flask import Flask
 
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world")
+app = Flask(__name__)
 
-def make_app():
-    return tornado.web.Application([
-        (r"/", MainHandler),
-    ])
+@app.route('/')
+def home():
+    return "Hello, AWS Elastic Beanstalk!"
 
-application = make_app()
-
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8889))
-    application.listen(port)
-    tornado.ioloop.IOLoop.current().start()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
